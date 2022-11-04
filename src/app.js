@@ -17,3 +17,12 @@ let template=
 
 const appRoot=document.getElementById('app');
 ReactDOM.render(template,appRoot);
+
+// Testing Arrow Functions
+
+
+// let fullName='Ahmed wael sdsdf sdfsdf';
+
+// let firstName= (x)=> x.split(' ')[0];
+
+// console.log(firstName(fullName))
