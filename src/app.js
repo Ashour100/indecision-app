@@ -18,11 +18,14 @@ let template=
 const appRoot=document.getElementById('app');
 ReactDOM.render(template,appRoot);
 
-// Testing Arrow Functions
 
 
-// let fullName='Ahmed wael sdsdf sdfsdf';
-
-// let firstName= (x)=> x.split(' ')[0];
-
-// console.log(firstName(fullName))
+//Testing
+const multipier={
+    numbers:[5,10,15],
+    multiplyBy:2,
+    multipingProcess(){
+        return this.numbers.map((number)=> number*this.multiplyBy);
+    } 
+}
+    console.log(multipier.multipingProcess());
