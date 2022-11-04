@@ -37,11 +37,16 @@ var template = React.createElement(
 var appRoot = document.getElementById('app');
 ReactDOM.render(template, appRoot);
 
-// Testing Arrow Functions
+//Testing
+var multipier = {
+    numbers: [5, 10, 15],
+    multiplyBy: 2,
+    multipingProcess: function multipingProcess() {
+        var _this = this;
 
-
-// let fullName='Ahmed wael sdsdf sdfsdf';
-
-// let firstName= (x)=> x.split(' ')[0];
-
-// console.log(firstName(fullName))
+        return this.numbers.map(function (number) {
+            return number * _this.multiplyBy;
+        });
+    }
+};
+console.log(multipier.multipingProcess());
