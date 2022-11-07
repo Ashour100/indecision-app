@@ -1,51 +1,33 @@
 'use strict';
 
-var number = 0;
+var hide = true;
 
 var render = function render() {
+
     var template = React.createElement(
         'div',
         null,
         React.createElement(
             'h1',
             null,
-            'Count:',
-            number
+            'Visibility Toggle'
         ),
         React.createElement(
             'button',
             { onClick: function onClick() {
-                    number++;render();
+                    hide = !hide;render();
                 } },
-            '+1'
+            hide ? 'Hide Detalis' : 'Show Detalis'
         ),
-        React.createElement(
-            'button',
-            { onClick: function onClick() {
-                    number--;render();
-                } },
-            '-1'
-        ),
-        React.createElement(
-            'button',
-            { onClick: function onClick() {
-                    number = 0;render();
-                } },
-            'Reset'
+        hide && React.createElement(
+            'h3',
+            null,
+            'Some secret Details'
         )
     );
+
+    var appRoot = document.getElementById('app');
     ReactDOM.render(template, appRoot);
 };
 
-var appRoot = document.getElementById('app');
 render();
-
-//Testing
-// const multipier={
-//     numbers:[5,10,15],
-//     multiplyBy:2,
-//     multipingProcess(){
-//         return this.numbers.map((number)=> number*this.multiplyBy);
-//     } 
-// }
-//     console.log(multipier.multipingProcess());
