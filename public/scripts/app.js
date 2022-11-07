@@ -1,6 +1,6 @@
 'use strict';
 
-var hide = true;
+var Visibility = true;
 
 var render = function render() {
 
@@ -15,11 +15,11 @@ var render = function render() {
         React.createElement(
             'button',
             { onClick: function onClick() {
-                    hide = !hide;render();
+                    Visibility = !Visibility;render();
                 } },
-            hide ? 'Hide Detalis' : 'Show Detalis'
+            Visibility ? 'Hide Detalis' : 'Show Detalis'
         ),
-        hide && React.createElement(
+        Visibility && React.createElement(
             'h3',
             null,
             'Some secret Details'
