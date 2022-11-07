@@ -1,33 +1,59 @@
-
-
-
-let number=0;
-
-
-const render= function(){
-    let template=
-    <div>
-    <h1>Count:{number}</h1>
-    <button onClick={()=>{number++;render()}}>+1</button>
-    <button onClick={()=>{number--;render()}}>-1</button>
-    <button onClick={()=>{number=0;render()}}>Reset</button>
-    </div>;
-    ReactDOM.render(template,appRoot);
+class Header extends React.Component {
+    render() {
+        return (
+        <div>
+            <h1>Indecision</h1>
+            <h2>Put your life in the hands of a computer</h2>
+        </div>
+        );
+    }
 }
 
-const appRoot=document.getElementById('app');
-render();
+class Action extends React.Component {
+    render() {
+        return (
+        <div>
+            <button>What should I do?</button>
+        </div>
+        );
+    }
+}
+
+class Options extends React.Component{
+    render(){
+        return(
+            <div>
+                <ol>
+                    <li>a</li>
+                    <li>b</li>
+                </ol>
+            </div>
+        )
+    }
+} 
+class AddOption extends React.Component{
+    // submit(e){
+    //     e.preventDel
+    // };
+    render(){
+        return(
+            <form OnSubmit='submit'>
+                <input type="text" name='option' />
+                <button>Add</button>
+            </form>
+        )
+    }
+}
 
 
+let template=
+<div>
+    <Header />
+    <Action />
+    <Options />
+    <AddOption />
+</div>
+;
 
 
-
-//Testing
-// const multipier={
-//     numbers:[5,10,15],
-//     multiplyBy:2,
-//     multipingProcess(){
-//         return this.numbers.map((number)=> number*this.multiplyBy);
-//     } 
-// }
-//     console.log(multipier.multipingProcess());
+ReactDOM.render(template,document.getElementById('app'));
