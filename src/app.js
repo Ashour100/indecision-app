@@ -1,11 +1,21 @@
 class IndecisionApp extends React.Component{
+    constructor(props){
+        super(props);
+        this.handlePick=this.handlePick.bind(this);
+        this.state={
+            options: ['First Option', 'Sec Option','third']
+        }
+    }
+    handlePick(){
+        alert(this.state.options[Math.floor(Math.random()*this.state.options.length)])
+        return this.state.options[Math.floor(Math.random()*this.state.options.length)]
+    }
     render(){
-        let options= ['First Option', 'Sec Option','third'];
         return(
             <div>
                 <Header />
-                <Action />
-                <Options options={options} />
+                <Action handlePick={this.handlePick} />
+                <Options options={this.state.options} />
                 <AddOption />
             </div>
         )
@@ -27,18 +37,22 @@ class Action extends React.Component {
     render() {
         return (
         <div>
-            <button>What should I do?</button>
+            <button onClick={this.props.handlePick}>What should I do?</button>
         </div>
         );
     }
 }
 
 class Options extends React.Component{
+    handleRemoveAll() {
+        alert('handleRemoveAll');
+    }
     render(){
         let options=this.props.options;
         return(
             <div>
-            <span>There are {options.length} options</span>
+                <span>There are {options.length} options</span>
+                <button onClick={this.handleRemoveAll}>Remove All</button>
                 <ol>
                 {options.map((element) => <Option key={element} element={element} />)}
                 </ol>
@@ -54,18 +68,25 @@ class Option extends React.Component{
     }
 } 
 class AddOption extends React.Component{
-    // submit(e){
-    //     e.preventDel
-    // };
-    render(){
-        return(
-            <form >
-                <input type="text" name='option' />
-                <button>Add</button>
-            </form>
-        )
+    handleAddOption(e) {
+        e.preventDefault();
+    
+        const option = e.target.elements.option.value.trim();
+    
+        if (option) {
+            alert(option);
+        }
+    }
+    render() {
+        return (
+            <div>
+                <form onSubmit={this.handleAddOption}>
+                    <input type="text" name="option" />
+                    <button>Add Option</button>
+                </form>
+            </div>
+        );
     }
 }
-
-console.log(Options.options)
+console.log()
 ReactDOM.render(<IndecisionApp />,document.getElementById('app'));
