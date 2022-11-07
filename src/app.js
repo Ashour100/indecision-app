@@ -1,3 +1,17 @@
+class IndecisionApp extends React.Component{
+    render(){
+        let options= ['First Option', 'Sec Option','third'];
+        return(
+            <div>
+                <Header />
+                <Action />
+                <Options options={options} />
+                <AddOption />
+            </div>
+        )
+    }
+    
+}
 class Header extends React.Component {
     render() {
         return (
@@ -21,13 +35,21 @@ class Action extends React.Component {
 
 class Options extends React.Component{
     render(){
+        let options=this.props.options;
         return(
             <div>
+            <span>There are {options.length} options</span>
                 <ol>
-                    <li>a</li>
-                    <li>b</li>
+                {options.map((element) => <Option key={element} element={element} />)}
                 </ol>
             </div>
+        )
+    }
+} 
+class Option extends React.Component{
+    render(){
+        return(
+            <li>{this.props.element}</li>
         )
     }
 } 
@@ -37,7 +59,7 @@ class AddOption extends React.Component{
     // };
     render(){
         return(
-            <form OnSubmit='submit'>
+            <form >
                 <input type="text" name='option' />
                 <button>Add</button>
             </form>
@@ -45,15 +67,5 @@ class AddOption extends React.Component{
     }
 }
 
-
-let template=
-<div>
-    <Header />
-    <Action />
-    <Options />
-    <AddOption />
-</div>
-;
-
-
-ReactDOM.render(template,document.getElementById('app'));
+console.log(Options.options)
+ReactDOM.render(<IndecisionApp />,document.getElementById('app'));
