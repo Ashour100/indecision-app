@@ -1,22 +1,24 @@
+class BuildItVisible extends React.Component{
+    constructor(props){
+        super(props);
+        this.handleVisibility=this.handleVisibility.bind(this);
+        this.state={visibility:false}
+    }
+    handleVisibility(){
+        this.setState((prevState)=>{
+            return{
+                visibility: !prevState.visibility
+            }
+        });
+    }
 
-
-
-
-
-let Visibility=true;
-
-
-let render= function(){
-
-    let template= 
-    <div>
-        <h1>Visibility Toggle</h1>
-        <button onClick={()=>{Visibility=!Visibility;render()}}>{Visibility ? 'Hide Detalis' : 'Show Detalis'}</button>
-        {Visibility && <h3>Some secret Details</h3>}
-    </div>;
-    
-    const appRoot=document.getElementById('app');
-    ReactDOM.render(template,appRoot);
+    render(){
+        return(
+        <div>
+            <h1>Visibility Toggle</h1>
+            <button onClick={this.handleVisibility}>{this.state.visibility ? 'Hide Detalis' : 'Show Detalis'}</button>
+            {this.state.visibility && <h3>Some secret Details</h3>}
+        </div>)
+    }
 }
-
-render();
+ReactDOM.render(<BuildItVisible />,document.getElementById('app'));
