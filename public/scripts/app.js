@@ -17,6 +17,7 @@ var IndecisionApp = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (IndecisionApp.__proto__ || Object.getPrototypeOf(IndecisionApp)).call(this, props));
 
         _this.handlePick = _this.handlePick.bind(_this);
+        _this.handleRemoveAll = _this.handleRemoveAll.bind(_this);
         _this.state = {
             options: ['First Option', 'Sec Option', 'third']
         };
@@ -27,7 +28,15 @@ var IndecisionApp = function (_React$Component) {
         key: 'handlePick',
         value: function handlePick() {
             alert(this.state.options[Math.floor(Math.random() * this.state.options.length)]);
-            return this.state.options[Math.floor(Math.random() * this.state.options.length)];
+        }
+    }, {
+        key: 'handleRemoveAll',
+        value: function handleRemoveAll() {
+            this.setState(function () {
+                return {
+                    options: []
+                };
+            });
         }
     }, {
         key: 'render',
@@ -37,7 +46,7 @@ var IndecisionApp = function (_React$Component) {
                 null,
                 React.createElement(Header, null),
                 React.createElement(Action, { handlePick: this.handlePick }),
-                React.createElement(Options, { options: this.state.options }),
+                React.createElement(Options, { options: this.state.options, removeAll: this.handleRemoveAll }),
                 React.createElement(AddOption, null)
             );
         }
@@ -115,11 +124,6 @@ var Options = function (_React$Component4) {
     }
 
     _createClass(Options, [{
-        key: 'handleRemoveAll',
-        value: function handleRemoveAll() {
-            alert('handleRemoveAll');
-        }
-    }, {
         key: 'render',
         value: function render() {
             var options = this.props.options;
@@ -135,7 +139,7 @@ var Options = function (_React$Component4) {
                 ),
                 React.createElement(
                     'button',
-                    { onClick: this.handleRemoveAll },
+                    { onClick: this.props.removeAll },
                     'Remove All'
                 ),
                 React.createElement(

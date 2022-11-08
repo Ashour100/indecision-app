@@ -2,20 +2,27 @@ class IndecisionApp extends React.Component{
     constructor(props){
         super(props);
         this.handlePick=this.handlePick.bind(this);
+        this.handleRemoveAll=this.handleRemoveAll.bind(this);
         this.state={
             options: ['First Option', 'Sec Option','third']
         }
     }
     handlePick(){
         alert(this.state.options[Math.floor(Math.random()*this.state.options.length)])
-        return this.state.options[Math.floor(Math.random()*this.state.options.length)]
+    }
+    handleRemoveAll(){
+        this.setState(()=>{
+            return{
+                options:[]
+            }
+        });
     }
     render(){
         return(
             <div>
                 <Header />
                 <Action handlePick={this.handlePick} />
-                <Options options={this.state.options} />
+                <Options options={this.state.options} removeAll={this.handleRemoveAll} />
                 <AddOption />
             </div>
         )
@@ -44,15 +51,12 @@ class Action extends React.Component {
 }
 
 class Options extends React.Component{
-    handleRemoveAll() {
-        alert('handleRemoveAll');
-    }
     render(){
         let options=this.props.options;
         return(
             <div>
                 <span>There are {options.length} options</span>
-                <button onClick={this.handleRemoveAll}>Remove All</button>
+                <button onClick={this.props.removeAll}>Remove All</button>
                 <ol>
                 {options.map((element) => <Option key={element} element={element} />)}
                 </ol>
