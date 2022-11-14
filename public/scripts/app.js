@@ -8,33 +8,65 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var IndecisionApp = function (_React$Component) {
-    _inherits(IndecisionApp, _React$Component);
+var Counter = function (_React$Component) {
+    _inherits(Counter, _React$Component);
 
-    function IndecisionApp(props) {
-        _classCallCheck(this, IndecisionApp);
+    function Counter(props) {
+        _classCallCheck(this, Counter);
 
-        var _this = _possibleConstructorReturn(this, (IndecisionApp.__proto__ || Object.getPrototypeOf(IndecisionApp)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Counter.__proto__ || Object.getPrototypeOf(Counter)).call(this, props));
 
-        _this.handlePick = _this.handlePick.bind(_this);
-        _this.handleRemoveAll = _this.handleRemoveAll.bind(_this);
+        _this.handleAddOne = _this.handleAddOne.bind(_this);
+        _this.handleMinusOne = _this.handleMinusOne.bind(_this);
+        _this.handleReset = _this.handleReset.bind(_this);
         _this.state = {
-            options: ['First Option', 'Sec Option', 'third']
+            count: 0
         };
         return _this;
     }
 
-    _createClass(IndecisionApp, [{
-        key: 'handlePick',
-        value: function handlePick() {
-            alert(this.state.options[Math.floor(Math.random() * this.state.options.length)]);
+    _createClass(Counter, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var stringCount = localStorage.getItem('count');
+            var count = parseInt(stringCount, 10);
+
+            if (!isNaN(count)) {
+                this.setState(function () {
+                    return { count: count };
+                });
+            }
         }
     }, {
-        key: 'handleRemoveAll',
-        value: function handleRemoveAll() {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+            if (prevState.count != this.state.count) {
+                localStorage.setItem('count', this.state.count);
+            }
+        }
+    }, {
+        key: 'handleAddOne',
+        value: function handleAddOne() {
+            this.setState(function (lastState) {
+                return { count: lastState.count + 1 };
+            });
+            console.log(this.state.count);
+        }
+    }, {
+        key: 'handleMinusOne',
+        value: function handleMinusOne() {
+            this.setState(function (lastState) {
+                return {
+                    count: lastState.count - 1
+                };
+            });
+        }
+    }, {
+        key: 'handleReset',
+        value: function handleReset() {
             this.setState(function () {
                 return {
-                    options: []
+                    count: 0
                 };
             });
         }
@@ -44,122 +76,35 @@ var IndecisionApp = function (_React$Component) {
             return React.createElement(
                 'div',
                 null,
-                React.createElement(Header, null),
-                React.createElement(Action, { available: this.state.options.length, handlePick: this.handlePick }),
-                React.createElement(Options, { options: this.state.options, removeAll: this.handleRemoveAll }),
-                React.createElement(AddOption, null)
-            );
-        }
-    }]);
-
-    return IndecisionApp;
-}(React.Component);
-
-var Header = function Header() {
-    return React.createElement(
-        'div',
-        null,
-        React.createElement(
-            'h1',
-            null,
-            'Indecision'
-        ),
-        React.createElement(
-            'h2',
-            null,
-            'Put your life in the hands of a computer'
-        )
-    );
-};
-
-var Action = function Action(props) {
-    return React.createElement(
-        'div',
-        null,
-        React.createElement(
-            'button',
-            { disabled: !props.available, onClick: props.handlePick },
-            'What should I do?'
-        )
-    );
-};
-
-var Options = function Options(props) {
-    var options = props.options;
-    return React.createElement(
-        'div',
-        null,
-        React.createElement(
-            'span',
-            null,
-            'There are ',
-            options.length,
-            ' options'
-        ),
-        React.createElement(
-            'button',
-            { onClick: props.removeAll },
-            'Remove All'
-        ),
-        React.createElement(
-            'ol',
-            null,
-            options.map(function (element) {
-                return React.createElement(Option, { key: element, element: element });
-            })
-        )
-    );
-};
-var Option = function Option(props) {
-    return React.createElement(
-        'li',
-        null,
-        props.element
-    );
-};
-
-var AddOption = function (_React$Component2) {
-    _inherits(AddOption, _React$Component2);
-
-    function AddOption() {
-        _classCallCheck(this, AddOption);
-
-        return _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).apply(this, arguments));
-    }
-
-    _createClass(AddOption, [{
-        key: 'handleAddOption',
-        value: function handleAddOption(e) {
-            e.preventDefault();
-
-            var option = e.target.elements.option.value.trim();
-
-            if (option) {
-                alert(option);
-            }
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return React.createElement(
-                'div',
-                null,
                 React.createElement(
-                    'form',
-                    { onSubmit: this.handleAddOption },
-                    React.createElement('input', { type: 'text', name: 'option' }),
-                    React.createElement(
-                        'button',
-                        null,
-                        'Add Option'
-                    )
+                    'h1',
+                    null,
+                    'Counter: ',
+                    this.state.count
+                ),
+                React.createElement(
+                    'button',
+                    { onClick: this.handleAddOne },
+                    '+1'
+                ),
+                React.createElement(
+                    'button',
+                    { onClick: this.handleMinusOne },
+                    '-1'
+                ),
+                React.createElement(
+                    'button',
+                    { onClick: this.handleReset },
+                    'reset'
                 )
             );
         }
     }]);
 
-    return AddOption;
+    return Counter;
 }(React.Component);
+// Counter.defaultProps={
+//     count:0
+// }
 
-console.log();
-ReactDOM.render(React.createElement(IndecisionApp, null), document.getElementById('app'));
+ReactDOM.render(React.createElement(Counter, null), document.getElementById('app'));
