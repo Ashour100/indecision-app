@@ -3,10 +3,13 @@ import AddOption from './AddOption';
 import Action from './Action';
 import Header from './Header';
 import Options from './Options';
+import Modal from './OptionModal';
 
 export default class IndecisionApp extends React.Component {
   state = {
-    options: []
+    options: [],
+    whatShouldIDo:undefined,
+    clicked:false,
   };
   componentDidMount() {
     try {
@@ -14,15 +17,15 @@ export default class IndecisionApp extends React.Component {
       const options = JSON.parse(json);
 
       if (options) {
-        setState(() => ({ options }));
+        this.setState(() => ({ options }));
       }
     } catch (e) {
       // Do nothing at all
     }
   }
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.options.length !== state.options.length) {
-      const json = JSON.stringify(state.options);
+    if (prevState.options.length !== this.state.options.length) {
+      const json = JSON.stringify(this.state.options);
       localStorage.setItem('options', json);
     }
   }
@@ -30,28 +33,31 @@ export default class IndecisionApp extends React.Component {
     console.log('componentWillUnmount');
   }
   handleDeleteOptions= ()=> {
-    setState(() => ({ options: [] }));
+    this.setState(() => ({ options: [] }));
   }
   handleDeleteOption= (optionToRemove)=> {
-    setState((prevState) => ({
+    this.setState((prevState) => ({
       options: prevState.options.filter((option) => optionToRemove !== option)
     }));
   }
   handlePick= ()=> {
-    const randomNum = Math.floor(Math.random() * state.options.length);
-    const option = state.options[randomNum];
-    alert(option);
+    const randomNum = Math.floor(Math.random() * this.state.options.length);
+    const whatShouldIDo = this.state.options[randomNum];
+    this.setState(() => ({whatShouldIDo,clicked:true}))
   }
   handleAddOption= (option)=> {
     if (!option) {
       return 'Enter valid value to add item';
-    } else if (state.options.indexOf(option) > -1) {
+    } else if (this.state.options.indexOf(option) > -1) {
       return 'This option already exists';
     }
-    setState((prevState) => ({
+    this.setState((prevState) => ({
       options: prevState.options.concat(option)
     }));
   }
+  handleCloseWSID= ()=>{
+    this.setState(() => ({whatShouldIDo:undefined, clicked:false}))
+  };
   render() {
     const subtitle = 'Put your life in the hands of a computer';
 
@@ -70,6 +76,7 @@ export default class IndecisionApp extends React.Component {
         <AddOption
           handleAddOption={this.handleAddOption}
         />
+        <Modal whatShouldIDo={this.state.whatShouldIDo} clicked={this.state.clicked} handleCloseWSID={this.handleCloseWSID} clo/>
       </div>
     );
   }
